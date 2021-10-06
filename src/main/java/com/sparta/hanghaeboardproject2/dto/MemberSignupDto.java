@@ -18,7 +18,7 @@ public class MemberSignupDto {
     private String username;
 
 //    @NotBlank(message = "비밀번호를 입력해주세요!")
-//    @Pattern(regexp = "{4,}", message = "비밀번호는 최소 4자 이상 입니다.")
+//    @Pattern(regexp = "{4,}", message = "비밀번호는 최소 4자  이상 입니다.")
     private String password;
 
 //    @NotBlank(message = "이메일을 입력해주세요!")

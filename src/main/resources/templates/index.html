@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <meta charset="UTF-8">
+    <title>메인 페이지</title>
+</head>
+<body>
+<div class="wrapper">
+    <div id="main-boards">
+        <div class="card-body">
+            <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th class="boards-num">번호</th>
+                    <th class="boards-title">제목</th>
+                    <th class="boards-writer">작성자명</th>
+                    <th class="boards-createdate">등록날짜</th>
+                </tr>
+                </thead>
+
+                <tbody class="boards-tableTbody" id="tableTbody">
+                    <tr th:each="board : ${boards}">
+                        <td th:text="${board.id}"></td>
+                        <td th:text="${board.title}"></td>
+                        <td th:text="${board.writer}"></td>
+                        <td th:text="${board.transFormatModifiedAt}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <nav class="main-nav" aria-label="Page navigation example">
+            <ul class="pagination">
+                <div class="write-btn">
+                    <a class="btn btn-primary" href="/boardWrite" role="button">글쓰기</a>
+                </div>
+
+                <div id="pageing-num">
+
+                </div>
+
+            </ul>
+        </nav>
+    </div>
+</div>
+</body>
+</html>
