@@ -1,5 +1,6 @@
 package com.sparta.hanghaeboardproject2.model;
 
+import com.sparta.hanghaeboardproject2.dto.MemberSignupDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,5 +41,12 @@ public class Member {
         this.password = password;
         this.email = email;
         this.kakaoId = kakaoId;
+    }
+
+    public Member(MemberSignupDto memberSignupDto) {
+        this.username = memberSignupDto.getUsername();
+        this.password = memberSignupDto.getPassword();
+        this.email = memberSignupDto.getEmail();
+        this.kakaoId = null;
     }
 }
