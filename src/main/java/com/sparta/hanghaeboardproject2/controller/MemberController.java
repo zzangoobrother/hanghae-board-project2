@@ -28,6 +28,7 @@ public class MemberController {
         if (result.hasErrors()) {
             return "memberJoinForm";
         }
+        memberService.memberJoin(memberSignupDto);
         return "redirect:/member/login";
     }
 }
