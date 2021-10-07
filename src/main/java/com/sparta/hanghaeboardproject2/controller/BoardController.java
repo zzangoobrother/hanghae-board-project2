@@ -45,4 +45,12 @@ public class BoardController {
         model.addAttribute("board", board);
         return "board";
     }
+
+    // 게시판 수정 페이지 이동
+    @GetMapping("/board/update/{id}")
+    public String getUpdateBoard(@PathVariable Long id, Model model) {
+        Board board = boardService.getBoard(id);
+        model.addAttribute("board", board);
+        return "boardUpdateForm";
+    }
 }
