@@ -32,4 +32,10 @@ public class BoardService {
         boardRepository.save(board);
         return board;
     }
+
+    public Board getBoard(Long id) {
+        Board board = boardRepository.findById(id).orElse(null);
+        board.tranModifiedAt();
+        return board;
+    }
 }

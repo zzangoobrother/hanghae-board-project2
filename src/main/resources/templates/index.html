@@ -26,7 +26,7 @@
                 </thead>
 
                 <tbody class="boards-tableTbody" id="tableTbody">
-                    <tr th:each="board : ${boards}">
+                    <tr th:each="board : ${boards}" th:onclick="|location.href='@{/board/{id}(id=${board.id})}'|">
                         <td th:text="${board.id}"></td>
                         <td th:text="${board.title}"></td>
                         <td th:text="${board.writer}"></td>
