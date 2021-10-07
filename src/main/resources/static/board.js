@@ -1,5 +1,3 @@
-
-alert("시작")
 function deleteBoard(id) {
     let data = {
         'id' : $('#board_id').val()

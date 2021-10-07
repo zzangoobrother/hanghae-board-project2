@@ -33,6 +33,22 @@
         <button type="button" class="btn btn-primary" onclick="deleteBoard()">삭제</button>
         <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/}'|">목록</button>
     </div>
+
+    <div class="">
+        <div>
+            
+        </div>
+        <div th:each="answer : ${answers}">
+            <div>
+                <input type="text" th:value="${answer.writer}" readonly>
+                <input type="text" th:value="${answer.transFormatModifiedAt}" readonly>
+            </div>
+            <div>
+                <textarea rows="3" th:text="${answer.contents}" readonly/>
+            </div>
+
+        </div>
+    </div>
 </div>
 </body>
 </html>
