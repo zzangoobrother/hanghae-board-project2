@@ -43,12 +43,14 @@ public class BoardController {
 
     // 게시판 단건 조회
     @GetMapping("/board/{id}")
-    public String getBoard(@PathVariable Long id, Model model) {
+    public String getBoard(@PathVariable Long id, @AuthenticationPrincipal MemberDetailsImpl memberDetails, Model model) {
         Board board = boardService.getBoard(id);
         model.addAttribute("board", board);
 
         List<Answer> answerList = answerService.getBoard(id);
         model.addAttribute("answers", answerList);
+
+        model.addAttribute("username", memberDetails.getMember().getUsername());
         return "board";
     }
 

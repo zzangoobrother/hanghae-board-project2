@@ -14,3 +14,61 @@ function deleteBoard(id) {
         }
     })
 }
+
+function createAnswer() {
+    let data = {
+        'boardId' : $('#board_id').val(),
+        'contents' : $('#answer_contents').val(),
+        'writer' : $('#write').val()
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/answer/',
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (response) {
+            window.location.href = '/board/' + $('#board_id').val()
+        }
+    })
+}
+
+function updateAnswer(id) {
+    let answerid = id + '-answer-id';
+    let writer = id + '-answer-writer';
+    let contents = id + '-answer-contents';
+
+    let data = {
+        'answerId' : $('#'+answerid).val(),
+        'contents' : $('#' + contents).val(),
+        'writer' : $('#' + writer).val()
+    }
+
+    $.ajax({
+        type: 'PUT',
+        url: '/api/answer/',
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (response) {
+            window.location.href = '/board/' + $('#board_id').val()
+        }
+    })
+}
+
+function deleteAnswer(id) {
+    let answerid = id + '-answer-id';
+
+    let data = {
+        'answerId' : $('#'+answerid).val(),
+    }
+
+    $.ajax({
+        type: 'DELETE',
+        url: '/api/answer/',
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (response) {
+            window.location.href = '/board/' + $('#board_id').val()
+        }
+    })
+}

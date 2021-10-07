@@ -1,5 +1,6 @@
 package com.sparta.hanghaeboardproject2.model;
 
+import com.sparta.hanghaeboardproject2.dto.AnswerDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,5 +29,14 @@ public class Answer extends Timestamped {
         this.writer = writer;
         this.contents = contents;
         this.board = board;
+    }
+
+    public Answer(AnswerDto answerDto, String username) {
+        this.writer = username;
+        this.contents = answerDto.getContents();
+    }
+
+    public void update(AnswerDto answerDto) {
+        this.contents = answerDto.getContents();
     }
 }
