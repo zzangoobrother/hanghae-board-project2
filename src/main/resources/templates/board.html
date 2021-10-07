@@ -8,12 +8,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+    <script src="../board.js"></script>
     <title>게시판 페이지</title>
 </head>
 <body>
 <div class="wrapper">
     <div class="one-board" id="one-board">
+        <input type="hidden" id="board_id" name="board_id" th:value="${board.id}">
         <label class="col-sm-2 col-form-label">제목</label>
         <input type="text" class="form-control" name="title" id="title" th:value="${board.title}" readonly>
 
@@ -27,7 +30,7 @@
         <textarea class="form-control" id="board-contents" rows="10" th:text="${board.contents}" readonly></textarea>
 
         <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/board/update/{id}(id=${board.id})}'|">수정</button>
-        <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/board/delete/{id}(id=${board.id})}'|">삭제</button>
+        <button type="button" class="btn btn-primary" onclick="deleteBoard()">삭제</button>
         <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/}'|">목록</button>
     </div>
 </div>

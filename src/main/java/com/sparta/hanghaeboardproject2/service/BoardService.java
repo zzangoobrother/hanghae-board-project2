@@ -47,4 +47,8 @@ public class BoardService {
         foundBoard.update(boardDto);
         return foundBoard.getId();
     }
+
+    public void deleteBoard(Long id) {
+        boardRepository.deleteById(id);
+    }
 }
