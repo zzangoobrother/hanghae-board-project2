@@ -38,4 +38,13 @@ public class BoardService {
         board.tranModifiedAt();
         return board;
     }
+
+    @Transactional
+    public Long updateBoard(Long id, BoardDto boardDto) {
+        Board foundBoard = boardRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
+        );
+        foundBoard.update(boardDto);
+        return foundBoard.getId();
+    }
 }

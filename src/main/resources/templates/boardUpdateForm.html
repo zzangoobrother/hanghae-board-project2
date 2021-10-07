@@ -16,13 +16,13 @@
     <div class="update-board" id="update-board">
         <form th:action method="post">
             <label class="col-sm-2 col-form-label">제목</label>
-            <input type="text" class="form-control" id="update-title" th:value="${board.title}">
+            <input type="text" class="form-control" name="title" id="title" th:value="${board.title}">
 
             <label class="col-sm-2 col-form-label">작성자</label>
-            <input class="form-control" id="update-write" type="text" th:value="${board.writer}" disabled readonly>
+            <input class="form-control" name="writer" id="writer" type="text" th:value="${board.writer}" disabled readonly>
 
             <label class="col-sm-2 col-form-label">내용</label>
-            <textarea class="form-control" id="update-contents" th:text="${board.contents}" rows="10"></textarea>
+            <textarea class="form-control" name="contents" id="contents" th:text="${board.contents}" rows="10"></textarea>
 
             <button type="submit" class="btn btn-primary">저장</button>
         </form>

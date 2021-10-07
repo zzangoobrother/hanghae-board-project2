@@ -7,10 +7,7 @@ import com.sparta.hanghaeboardproject2.service.BoardService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class BoardController {
@@ -52,5 +49,12 @@ public class BoardController {
         Board board = boardService.getBoard(id);
         model.addAttribute("board", board);
         return "boardUpdateForm";
+    }
+
+    // 게시판 수정
+    @PostMapping("/board/update/{id}")
+    public String updateBoard(@PathVariable Long id, @ModelAttribute BoardDto boardDto) {
+        boardService.updateBoard(id, boardDto);
+        return "redirect:/board/{id}";
     }
 }
