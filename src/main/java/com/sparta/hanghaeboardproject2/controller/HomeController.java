@@ -19,7 +19,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        System.out.println("index start");
         List<Board> boardList = boardService.getBoards();
         model.addAttribute("boards", boardList);
         return "index";
