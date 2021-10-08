@@ -17,7 +17,13 @@ public class AnswerController {
 
     @PostMapping("/api/answer")
     public Long createAnswer(@RequestBody AnswerDto answerDto, @AuthenticationPrincipal MemberDetailsImpl memberDetails) {
-        Long answerId = answerService.createAnswer(answerDto, memberDetails);
+        Long answerId = null;
+        if (memberDetails.getMember() != null) {
+            answerId = answerService.createAnswer(answerDto, memberDetails);
+        } else {
+            throw new IllegalArgumentException("로그인 후 등록 가능합니다.");
+        }
+
         return answerId;
     }
 
@@ -27,7 +33,7 @@ public class AnswerController {
         return answerId;
     }
 
-    @DeleteMapping("/api/answer/")
+    @DeleteMapping("/api/answer")
     public void deleteAnswer(@RequestBody AnswerDto answerDto, @AuthenticationPrincipal MemberDetailsImpl memberDetails) {
         answerService.deleteAnswer(answerDto, memberDetails);
         return;

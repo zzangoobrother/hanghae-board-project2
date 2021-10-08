@@ -13,6 +13,21 @@
 </head>
 <body>
 <div class="wrapper">
+    <div class="header" style="position:relative;">
+        <div id="header-title-login-user" th:unless="${username} == null">
+            <span th:text="${username}"></span> 님 환영합니다.
+        </div>
+        <a id="logout-text" href="/member/signup">
+            회원가입
+        </a>
+        <a id="login-text" href="/member/login" th:if="${username} == null">
+            로그인
+        </a>
+        <a id="logout-text" href="/member/logout" th:unless="${username} == null">
+            로그아웃
+        </a>
+    </div>
+
     <div id="main-boards">
         <div class="card-body">
             <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
@@ -26,7 +41,7 @@
                 </thead>
 
                 <tbody class="boards-tableTbody" id="tableTbody">
-                    <tr th:each="board : ${boards}" th:onclick="|location.href='@{/board/{id}(id=${board.id})}'|">
+                    <tr th:each="board : ${boards}" th:onclick="|location.href='@{/board/only/{id}(id=${board.id})}'|">
                         <td th:text="${board.id}"></td>
                         <td th:text="${board.title}"></td>
                         <td th:text="${board.writer}"></td>

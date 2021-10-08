@@ -28,7 +28,11 @@ function createAnswer() {
         contentType: "application/json",
         data: JSON.stringify(data),
         success: function (response) {
-            window.location.href = '/board/' + $('#board_id').val()
+            window.location.href = '/board/only/' + $('#board_id').val()
+        },
+        error: function (response) {
+            alert("로그인 후 댓글 등록 가능합니다.")
+            window.location.href = '/member/login'
         }
     })
 }
@@ -50,7 +54,7 @@ function updateAnswer(id) {
         contentType: "application/json",
         data: JSON.stringify(data),
         success: function (response) {
-            window.location.href = '/board/' + $('#board_id').val()
+            window.location.href = '/board/only/' + $('#board_id').val()
         }
     })
 }
@@ -68,7 +72,7 @@ function deleteAnswer(id) {
         contentType: "application/json",
         data: JSON.stringify(data),
         success: function (response) {
-            window.location.href = '/board/' + $('#board_id').val()
+            window.location.href = '/board/only/' + $('#board_id').val()
         }
     })
 }

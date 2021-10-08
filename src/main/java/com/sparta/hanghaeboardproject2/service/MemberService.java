@@ -27,6 +27,14 @@ public class MemberService {
             throw new IllegalArgumentException("중복된 ID가 존재합니다.");
         }
 
+        if (memberSignupDto.getPassword().contains(memberSignupDto.getUsername())) {
+            throw new IllegalArgumentException("비밀번호에 아이디가 포함될 수 없습니다.");
+        }
+
+        if (!memberSignupDto.getPassword().equals(memberSignupDto.getPasswordOnemore())) {
+            throw new IllegalArgumentException("비밀번호가 일치 하지 않습니다.");
+        }
+
         //패스워드 암호화
         String password = passwordEncoder.encode(memberSignupDto.getPassword());
         String email = memberSignupDto.getEmail();

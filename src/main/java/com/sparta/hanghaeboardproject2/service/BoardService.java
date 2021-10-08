@@ -18,8 +18,6 @@ public class BoardService {
     }
 
     public List<Board> getBoards() {
-        Board board = new Board("test", "test", "test");
-        boardRepository.save(board);
         List<Board> boardList = boardRepository.findAllByOrderByModifiedAtDesc();
         for (Board board1 : boardList) {
             board1.tranModifiedAt();

@@ -27,9 +27,6 @@ public class AnswerService {
                 () -> new IllegalArgumentException("등록 된 내용이 없습니다.")
         );
 
-        Answer answer = new Answer("test", "test", board);
-        answerRepository.save(answer);
-
         List<Answer> answerList = answerRepository.findAllByBoardOrderByModifiedAtDesc(board);
         for (Answer answer1 : answerList) {
             answer1.tranModifiedAt();;
@@ -59,6 +56,5 @@ public class AnswerService {
 
     public void deleteAnswer(AnswerDto answerDto, MemberDetailsImpl memberDetails) {
         answerRepository.deleteById(answerDto.getAnswerId());
-        return;
     }
 }

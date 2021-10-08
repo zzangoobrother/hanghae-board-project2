@@ -31,18 +31,24 @@
 <div id="login-form">
     <div id="login-title">Sign up Select Shop</div>
 
-    <form action="/member/signup" th:action="@{/member/signup}" method="post" th:object="${memberSignupDto}">
+    <form th:action="@{/member/signup}" method="post" th:object="${memberSignupDto}">
         <div class="login-id-label">Username</div>
-        <input type="text" name="username" placeholder="Username" class="login-input-box">
+        <input type="text" name="username" placeholder="Username" class="login-input-box" th:field="*{username}">
+        <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
 
         <div class="login-id-label">Password</div>
-        <input type="password" name="password" class="login-input-box">
+        <input type="password" name="password" class="login-input-box" th:field="*{password}">
+        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+
+        <div class="login-id-label">Password 확인</div>
+        <input type="password" name="passwordOnemore" class="login-input-box">
 
         <div class="login-id-label">E-mail</div>
-        <input type="text" name="email" placeholder="E-mail" class="login-input-box">
+        <input type="text" name="email" placeholder="E-mail" class="login-input-box" th:field="*{email}">
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
 
         <button id="login-id-submit">회원 가입</button>
-    </form:for>
+    </form>
 </div>
 </body>
 </html>
