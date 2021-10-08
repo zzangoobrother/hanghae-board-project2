@@ -30,7 +30,7 @@ public class AnswerService {
         Answer answer = new Answer("test", "test", board);
         answerRepository.save(answer);
 
-        List<Answer> answerList = answerRepository.findAllByBoard(board);
+        List<Answer> answerList = answerRepository.findAllByBoardOrderByModifiedAtDesc(board);
         for (Answer answer1 : answerList) {
             answer1.tranModifiedAt();;
         }

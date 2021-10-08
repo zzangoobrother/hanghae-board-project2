@@ -50,7 +50,10 @@ public class BoardController {
         List<Answer> answerList = answerService.getBoard(id);
         model.addAttribute("answers", answerList);
 
-        model.addAttribute("username", memberDetails.getMember().getUsername());
+        if (memberDetails != null) {
+            model.addAttribute("username", memberDetails.getMember().getUsername());
+        }
+
         return "board";
     }
 
