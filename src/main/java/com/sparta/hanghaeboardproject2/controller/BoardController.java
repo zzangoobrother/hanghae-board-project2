@@ -6,13 +6,13 @@ import com.sparta.hanghaeboardproject2.model.Board;
 import com.sparta.hanghaeboardproject2.security.MemberDetailsImpl;
 import com.sparta.hanghaeboardproject2.service.AnswerService;
 import com.sparta.hanghaeboardproject2.service.BoardService;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -72,6 +72,6 @@ public class BoardController {
     @PostMapping("/board/update/{id}")
     public String updateBoard(@PathVariable Long id, @ModelAttribute BoardDto boardDto) {
         boardService.updateBoard(id, boardDto);
-        return "redirect:/board/{id}";
+        return "redirect:/board/only/{id}";
     }
 }

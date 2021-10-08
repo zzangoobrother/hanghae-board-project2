@@ -7,7 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" href="/style.css">
     <meta charset="UTF-8">
     <title>메인 페이지</title>
 </head>
@@ -17,13 +19,13 @@
         <div id="header-title-login-user" th:unless="${username} == null">
             <span th:text="${username}"></span> 님 환영합니다.
         </div>
-        <a id="logout-text" href="/member/signup">
+        <a class="btn btn-primary" role="button" href="/member/signup">
             회원가입
         </a>
-        <a id="login-text" href="/member/login" th:if="${username} == null">
+        <a class="btn btn-primary" role="button" href="/member/login" th:if="${username} == null">
             로그인
         </a>
-        <a id="logout-text" href="/member/logout" th:unless="${username} == null">
+        <a class="btn btn-primary" role="button" href="/member/logout" th:unless="${username} == null">
             로그아웃
         </a>
     </div>
