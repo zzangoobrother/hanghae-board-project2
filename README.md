@@ -108,6 +108,7 @@ e. Client
 
 3. 로그인 이후 로그인 상태 유지 방법
 ![20211009_4](https://user-images.githubusercontent.com/42162127/136648074-3c44a3a1-3a2d-402f-811f-d7b7699fe1c7.png)
+
 a. Client에서 Server에 API 요청할 때마다 Session 쿠키를 
 
 ## 4. 테스트 코드 작성 시 장단점과 테스트 종류별 특징
