@@ -17,7 +17,7 @@ IOC는 Inversion of Control의 약자로 제어의 역전이다.
 2. DI를 사용하는 이유?
 외부에서 두 객체 간 관계를 결정해주는 디자인 패턴으로 인터페이스를 사이로 클래스 레벨에서는 의존관계가 고정되지 않도록 하고 런타임 때 관계를 주입하여 유연성을 확보, 결합도를 낮추었다.
 
-'''java
+```java
 public class MemberController {
 
   private MemberService memberService;
@@ -28,4 +28,4 @@ public class MemberController {
 
   }
 }
-'''
+```
