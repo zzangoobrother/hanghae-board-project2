@@ -77,9 +77,40 @@ public class MemberController {
 }
 ```
 
-3. 스프링 시큐리티를 사용하여 회원관리하는 방법 순서도
+## 3. 스프링 시큐리티를 사용하여 회원관리하는 방법 순서도
+1. 회원가입
+![20211009_2](https://user-images.githubusercontent.com/42162127/136647877-baa57076-5376-49c5-9d62-30668f8ba4ab.png)
+a. Client -> Server
+- 회원가입에 필요한 정보
 
-4. 테스트 코드 작성 시 장단점과 테스트 종류별 특징
+b. Server
+- 회원가입 처리 : 중복 회원 ID확인, 패스워드 암호화, 회원 역할 설정
+
+c. Server -> DB
+- 회원정보 DB에 저장
+
+2. 로그인
+![20211009_3](https://user-images.githubusercontent.com/42162127/136647977-baab44c6-24a4-4afc-85bf-fbfa6fb6a98b.png)
+a. Client -> Server
+- 로그인에 필요한 정보
+
+b. Server
+- 회원 DB에서 username을 가진 회원 정보 가져옴: 회원 정보 없으면 에러 발생, 회원 DB와 전달받은 username, password 일치 비교
+
+c. Server -> Session
+- 로그인 성공시 Session에 저장
+
+d. Server -> Client
+- Session 쿠키 전달
+
+e. Client
+- Session 쿠키 저장
+
+3. 로그인 이후 로그인 상태 유지 방법
+![20211009_4](https://user-images.githubusercontent.com/42162127/136648074-3c44a3a1-3a2d-402f-811f-d7b7699fe1c7.png)
+a. Client에서 Server에 API 요청할 때마다 Session 쿠키를 
+
+## 4. 테스트 코드 작성 시 장단점과 테스트 종류별 특징
 - 개발자 테스트
 장점 
 1. 빠르고 정확한 테스트 가능 (예상 동작 vs 실제 동작)
