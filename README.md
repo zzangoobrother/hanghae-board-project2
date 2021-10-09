@@ -14,3 +14,18 @@ IOC는 Inversion of Control의 약자로 제어의 역전이다.
 제어권한을 위임받은 특별한 객체에 의해 결정되고 만들어진다.
 즉, 제어의 흐름을 사용자가 컨트롤 하지 않고 위임한 특별한 객체에 모든 것을 맡기는 것이다.
 
+2. DI를 사용하는 이유?
+외부에서 두 객체 간 관계를 결정해주는 디자인 패턴으로 인터페이스를 사이로 클래스 레벨에서는 의존관계가 고정되지 않도록 하고 런타임 때 관계를 주입하여 유연성을 확보, 결합도를 낮추었다.
+
+'''java
+public class MemberController {
+
+  private MemberService memberService;
+
+  public MemberController() {
+
+    memberService = new MemberService();
+
+  }
+}
+'''
