@@ -11,6 +11,10 @@ function deleteBoard(id) {
         success: function (response) {
             alert('삭제 완료');
             window.location.href = '/'
+        },
+        error: function (response) {
+            alert("해당 게시글 작성자만 삭제할 수 있습니다.")
+            window.location.href = '/'
         }
     })
 }

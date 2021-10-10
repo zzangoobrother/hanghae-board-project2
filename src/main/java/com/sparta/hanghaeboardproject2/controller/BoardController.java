@@ -1,6 +1,7 @@
 package com.sparta.hanghaeboardproject2.controller;
 
 import com.sparta.hanghaeboardproject2.dto.BoardDto;
+import com.sparta.hanghaeboardproject2.exception.HanghaeBoardLoginException;
 import com.sparta.hanghaeboardproject2.model.Answer;
 import com.sparta.hanghaeboardproject2.model.Board;
 import com.sparta.hanghaeboardproject2.security.MemberDetailsImpl;
@@ -29,11 +30,11 @@ public class BoardController {
 
     // 게시판 등록 페이지 이동
     @GetMapping("/board/write")
-    public String getBoardWriteForm(@AuthenticationPrincipal MemberDetailsImpl memberDetails, Model model) {
-        if (memberDetails != null) {
-            model.addAttribute("writer", memberDetails.getUsername());
+    public String getBoardWriteForm(@AuthenticationPrincipal MemberDetailsImpl memberDetails, Model model) throws HanghaeBoardLoginException {
+        if (memberDetails == null) {
+            throw new HanghaeBoardLoginException("로그인 후 글쓰기가 가능합니다.");
         }
-
+        model.addAttribute("writer", memberDetails.getUsername());
         return "boardAddForm";
     }
 
@@ -62,9 +63,14 @@ public class BoardController {
 
     // 게시판 수정 페이지 이동
     @GetMapping("/board/update/{id}")
-    public String getUpdateBoard(@PathVariable Long id, Model model) {
+    public String getUpdateBoard(@PathVariable Long id, Model model, @AuthenticationPrincipal MemberDetailsImpl memberDetails) throws HanghaeBoardLoginException {
         Board board = boardService.getBoard(id);
+        if (!board.getWriter().equals(memberDetails.getUsername())) {
+            throw new HanghaeBoardLoginException("해당 게시글은 작성자만 수정할 수 있습니다.");
+        }
+
         model.addAttribute("board", board);
+
         return "boardUpdateForm";
     }
 

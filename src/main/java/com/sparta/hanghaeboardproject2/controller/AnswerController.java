@@ -1,6 +1,7 @@
 package com.sparta.hanghaeboardproject2.controller;
 
 import com.sparta.hanghaeboardproject2.dto.AnswerDto;
+import com.sparta.hanghaeboardproject2.exception.HanghaeBoardLoginException;
 import com.sparta.hanghaeboardproject2.security.MemberDetailsImpl;
 import com.sparta.hanghaeboardproject2.service.AnswerService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,12 +17,12 @@ public class AnswerController {
     }
 
     @PostMapping("/api/answer")
-    public Long createAnswer(@RequestBody AnswerDto answerDto, @AuthenticationPrincipal MemberDetailsImpl memberDetails) {
+    public Long createAnswer(@RequestBody AnswerDto answerDto, @AuthenticationPrincipal MemberDetailsImpl memberDetails) throws HanghaeBoardLoginException {
         Long answerId = null;
         if (memberDetails.getMember() != null) {
             answerId = answerService.createAnswer(answerDto, memberDetails);
         } else {
-            throw new IllegalArgumentException("로그인 후 등록 가능합니다.");
+            throw new HanghaeBoardLoginException("로그인 후 등록 가능합니다.");
         }
 
         return answerId;

@@ -1,6 +1,8 @@
 package com.sparta.hanghaeboardproject2.service;
 
 import com.sparta.hanghaeboardproject2.dto.MemberSignupDto;
+import com.sparta.hanghaeboardproject2.exception.HanghaeBoardJoinException;
+import com.sparta.hanghaeboardproject2.exception.HanghaeBoardLoginException;
 import com.sparta.hanghaeboardproject2.model.Member;
 import com.sparta.hanghaeboardproject2.repository.MemberRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,20 +21,20 @@ public class MemberService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Member memberJoin(MemberSignupDto memberSignupDto) {
+    public Member memberJoin(MemberSignupDto memberSignupDto) throws HanghaeBoardJoinException {
         // 중복 id 확인
         String username = memberSignupDto.getUsername();
         Optional<Member> foundMember = memberRepository.findByUsername(username);
         if (foundMember.isPresent()) {
-            throw new IllegalArgumentException("중복된 ID가 존재합니다.");
+            throw new HanghaeBoardJoinException("중복된 ID가 존재합니다.");
         }
 
         if (memberSignupDto.getPassword().contains(memberSignupDto.getUsername())) {
-            throw new IllegalArgumentException("비밀번호에 아이디가 포함될 수 없습니다.");
+            throw new HanghaeBoardJoinException("비밀번호에 아이디가 포함될 수 없습니다.");
         }
 
         if (!memberSignupDto.getPassword().equals(memberSignupDto.getPasswordOnemore())) {
-            throw new IllegalArgumentException("비밀번호가 일치 하지 않습니다.");
+            throw new HanghaeBoardJoinException("비밀번호가 일치 하지 않습니다.");
         }
 
         //패스워드 암호화
