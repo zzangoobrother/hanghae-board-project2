@@ -20,7 +20,7 @@
   - mysql
 
 ### 2. 요구사항
-
+[요구사항] (https://github.com/zzangoobrother/hanghae-board-project2/blob/master/Requirements.md)
 
 ### 3. 핵심 기술
 - 로그인
