@@ -1,39 +1,38 @@
 package com.sparta.hanghaeboardproject2.service;
 
-import com.sparta.hanghaeboardproject2.controller.MemberController;
 import com.sparta.hanghaeboardproject2.dto.MemberSignupDto;
+import com.sparta.hanghaeboardproject2.exception.HanghaeBoardJoinException;
+import com.sparta.hanghaeboardproject2.model.Member;
 import com.sparta.hanghaeboardproject2.repository.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class MemberServiceTest {
 
     @Mock
     MemberRepository memberRepository;
 
-    @Autowired
-    MemberController memberController;
+    @Mock
+    PasswordEncoder passwordEncoder;
 
-    private MockMvc mock;
+    @InjectMocks
+    MemberService memberService;
 
     @BeforeEach
     public void setup() {
-        mock = MockMvcBuilders.standaloneSetup(memberController).build();
-        System.out.println("ddd" + mock.getClass());
+
     }
 
     @Test
@@ -49,16 +48,7 @@ class MemberServiceTest {
     @Test
     @DisplayName("닉네임 구성 실패")
     void nicknameCheck_Failed() throws Exception{
-        mock.perform(post("/member/signup")
-                .param("username", "dd")
-                .param("password", "123456")
-                .param("email", "sss"))
-                .andExpect(status().isOk())
-                .andExpect(model().errorCount(1))
-                .andExpect(model().attributeHasFieldErrorCode("memberSignupDto", "username", ""))
-                .andExpect(model().attributeHasFieldErrorCode("memberSignupDto", "email", ""));
 
-        //assertThat("ID는 최소 3자 이상, 알파벳, 숫자 조합으로 입력해주세요.").isEqualTo(exception.getMessage());
     }
 
     @Test
@@ -75,8 +65,16 @@ class MemberServiceTest {
 
     @Test
     @DisplayName("회원가입 완료")
-    void memeberJoin_Normal() {
+    void memeberJoin_Normal() throws HanghaeBoardJoinException {
+        MemberSignupDto memberSignupDto = new MemberSignupDto("홍길동", "1234567", "1234567", "sss@naver.com");
+        Member member = new Member(memberSignupDto);
 
+        when(memberRepository.save(any())).thenReturn(member);
+
+        Member saveMember = memberService.memberJoin(memberSignupDto);
+
+        assertThat(saveMember.getEmail()).isEqualTo(member.getEmail());
+        assertThat(saveMember.getUsername()).isEqualTo(member.getUsername());
     }
 
     @Test

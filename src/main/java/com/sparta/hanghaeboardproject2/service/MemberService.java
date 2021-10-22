@@ -2,7 +2,6 @@ package com.sparta.hanghaeboardproject2.service;
 
 import com.sparta.hanghaeboardproject2.dto.MemberSignupDto;
 import com.sparta.hanghaeboardproject2.exception.HanghaeBoardJoinException;
-import com.sparta.hanghaeboardproject2.exception.HanghaeBoardLoginException;
 import com.sparta.hanghaeboardproject2.model.Member;
 import com.sparta.hanghaeboardproject2.repository.MemberRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
