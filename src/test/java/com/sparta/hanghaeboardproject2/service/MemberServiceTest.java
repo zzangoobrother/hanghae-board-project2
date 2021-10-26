@@ -14,12 +14,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
+import static org.mockito.BDDMockito.willThrow;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MemberServiceTest {
+
+    @Mock
+    MemberService memberService;
 
     @Mock
     MemberRepository memberRepository;
@@ -27,22 +31,19 @@ class MemberServiceTest {
     @Mock
     PasswordEncoder passwordEncoder;
 
-    @InjectMocks
-    MemberService memberService;
+    @Mock
+    HanghaeBoardJoinException hanghaeBoardJoinException;
 
     @BeforeEach
     public void setup() {
-
+        Member member =new Member("길동", "1234567", "aa@naver.com");
+        memberRepository.save(member);
     }
 
     @Test
     @DisplayName("닉네임 최소 3자 이상, 알파벳 대소문자, 숫자로 구성 성공")
     void nicknameCheck_Normal() {
-        MemberSignupDto memberSignupDto = new MemberSignupDto();
 
-        memberSignupDto.setUsername("hongkildong");
-
-        assertThat("hongkildong").isEqualTo(memberSignupDto.getUsername());
     }
 
     @Test
@@ -79,8 +80,14 @@ class MemberServiceTest {
 
     @Test
     @DisplayName("존재하는 회원")
-    void memeberSame_Failed() {
+    void memeberSame_Failed() throws HanghaeBoardJoinException {
+        MemberSignupDto memberSignupDto = new MemberSignupDto("길동", "1234567", "1234567", "aa@naver.com");
 
+        willThrow(HanghaeBoardJoinException.class).given(memberService).memberJoin(memberSignupDto);
+
+        assertThrows(HanghaeBoardJoinException.class, () -> memberService.memberJoin(memberSignupDto));
+
+        verify(memberRepository, never()).save(any(Member.class));
     }
 
     @Test
