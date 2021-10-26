@@ -45,6 +45,18 @@
                 box.style.display = "none";
             }
         }
+
+        function auth() {
+            var email = $("#email").val();
+
+            $.ajax({
+                type: 'GET',
+                url: '/emailCheck?email=' + email,
+                success: function (response) {
+                    console.log(email);
+                }
+            })
+        }
     </script>
 </head>
 <body>
@@ -65,11 +77,12 @@
             <input type="password" name="passwordOnemore" class="login-input-box">
 
             <div class="login-id-label">E-mail</div>
-            <input type="text" name="email" placeholder="E-mail" class="login-input-box" th:field="*{email}">
+            <input type="text" id="email" name="email" placeholder="E-mail" class="login-input-box" th:field="*{email}">
             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
 
             <button id="login-id-submit">회원 가입</button>
         </form>
+        <button type="button" id="login-auth-submit" onclick="auth()">인증 번호</button>
     </div>
 </div>
 </body>
