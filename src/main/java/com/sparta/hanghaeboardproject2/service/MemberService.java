@@ -4,6 +4,7 @@ import com.sparta.hanghaeboardproject2.dto.MemberSignupDto;
 import com.sparta.hanghaeboardproject2.exception.HanghaeBoardJoinException;
 import com.sparta.hanghaeboardproject2.model.Member;
 import com.sparta.hanghaeboardproject2.repository.MemberRepository;
+import javax.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class MemberService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Member memberJoin(MemberSignupDto memberSignupDto) throws HanghaeBoardJoinException {
+    public Member memberJoin(MemberSignupDto memberSignupDto, String authKey) throws HanghaeBoardJoinException {
         // 중복 id 확인
         String username = memberSignupDto.getUsername();
         Optional<Member> foundMember = memberRepository.findByUsername(username);
@@ -38,10 +39,25 @@ public class MemberService {
 
         //패스워드 암호화
         String password = passwordEncoder.encode(memberSignupDto.getPassword());
+        memberSignupDto.setPassword(password);
         String email = memberSignupDto.getEmail();
 
-        Member member = new Member(username, password, email);
+        Member member = new Member(memberSignupDto, authKey);
 
         return memberRepository.save(member);
+    }
+
+    @Transactional
+    public void signUpConfirm(String email, String authKey) throws HanghaeBoardJoinException {
+        Member member = memberRepository.findByEmail(email).orElseThrow(
+            () -> new HanghaeBoardJoinException("인증번호가 만료 되었습니다. 다시 회원 가입 해주세요.")
+        );
+
+        if (member.getAuthKey().equalsIgnoreCase(authKey)) {
+            member.confirm();
+        } else {
+            throw new HanghaeBoardJoinException("인증번호가 맞지 않습니다.");
+        }
+
     }
 }

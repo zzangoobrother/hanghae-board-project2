@@ -3,6 +3,7 @@ package com.sparta.hanghaeboardproject2.controller;
 import com.sparta.hanghaeboardproject2.dto.MemberSignupDto;
 import com.sparta.hanghaeboardproject2.exception.HanghaeBoardJoinException;
 import com.sparta.hanghaeboardproject2.security.MemberDetailsImpl;
+import com.sparta.hanghaeboardproject2.service.MailSendService;
 import com.sparta.hanghaeboardproject2.service.MemberService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MemberController {
 
     private final MemberService memberService;
+    private final MailSendService mailSendService;
 
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, MailSendService mailSendService) {
         this.memberService = memberService;
+        this.mailSendService = mailSendService;
     }
 
     @GetMapping("/member/signup")
@@ -36,12 +39,14 @@ public class MemberController {
     }
 
     @PostMapping("/member/signup")
-    public String memberJoin(@ModelAttribute @Validated MemberSignupDto memberSignupDto, BindingResult result) throws HanghaeBoardJoinException {
+    public String memberJoin(@ModelAttribute @Validated MemberSignupDto memberSignupDto, BindingResult result)
+        throws Exception {
         if (result.hasErrors()) {
             return "memberJoinForm";
         }
+        String authKey = mailSendService.sendSimpleMessage(memberSignupDto.getEmail());
+        memberService.memberJoin(memberSignupDto, authKey);
 
-        memberService.memberJoin(memberSignupDto);
         return "redirect:/member/login";
     }
 
