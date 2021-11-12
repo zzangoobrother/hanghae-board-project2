@@ -19,7 +19,7 @@ public class HomeController {
         this.boardService = boardService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String home(@AuthenticationPrincipal MemberDetailsImpl memberDetails, Model model) {
         List<Board> boardList = boardService.getBoards();
         model.addAttribute("boards", boardList);
