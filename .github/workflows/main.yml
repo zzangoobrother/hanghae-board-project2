@@ -6,6 +6,10 @@ on:
       - master
   workflow_dispatch:
 
+env:
+  S3_BUCKET_NAME: server-s3
+  PROJECT_NAME: hanghae-board-project2
+
 jobs:
   build:
     runs-on: ubuntu-latest
