@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"/>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <meta charset="UTF-8">
+  <title>로그인 페이지</title>
+
+  <script>
+    var webSocket;
+    var nickname;
+    var roomId = '[[${room.roomId}]]';
+    function nicknameClick(){
+        nickname = document.getElementById("nickname").value;
+        document.getElementById("nickname").style.display="none";
+        document.getElementById("name").style.display="none";
+        connect();
+    }
+
+    function sendClick() {
+      send();
+    }
+
+    function connect() {
+      var socket = new SockJS('/chat');
+      stompClient = Stomp.over(socket);
+      stompClient.connect({}, function () {
+        stompClient.subscribe('/topic' + nickname, function (e) {
+          showMessage(JSON.parse(e.body));
+          alerClosing('comeMessage', 2000);
+        })
+      })
+      // webSocket = new WebSocket("ws:/3.36.92.203/chat");
+      // webSocket = new WebSocket("ws:/localhost:8080/chat");
+      // webSocket.onopen = onOpen;
+      // webSocket.onClose = onClose;
+      // webSocket.onmessage = onMessage;
+    }
+
+    function disconnect() {
+      webSocket.send(JSON.stringify({chatRoomId : roomId, type:'LEAVE',writer:nickname}));
+      webSocket.close();
+    }
+
+    function send() {
+      data = {'chatRoomId' : chatRoomId, 'sender' : nickname, 'receiver' : receiver, 'message' : $("#message").val()};
+      stompClient.send("/app/chat/send", {}, JSON.stringify(data));
+      showMessage(data);
+      $("#message").val('');
+      alertClosing('successMessage', 2000);
+      // msg = document.getElementById("message").value;
+      // webSocket.send(JSON.stringify({chatRoomId : roomId, type:'CHAT',writer:nickname, message : msg}));
+      // document.getElementById("message").value = "";
+    }
+
+    function onOpen() {
+      webSocket.send(JSON.stringify({chatRoomId : roomId, type:'ENTER',writer:nickname}));
+    }
+
+    function onMessage(e) {
+      data = e.data;
+      chatroom = document.getElementById("chatroom");
+      chatroom.innerHTML = chatroom.innerHTML + "<br>" + data;
+    }
+
+    function onClose() {
+      disconnect();
+    }
+  </script>
+</head>
+<body>
+<div class="wrapper">
+  <input type="text" id="nickname" class="form-inline" placeholder="닉네임을 입력해주세요." required autofocus>
+  <button class="btn btn-primary" id="name" onclick="nicknameClick()">확인</button>
+  <label for="roomId" class="label label-default">방 번호</label>
+  <label th:text="*{room.roomId}" id="roomId" class="form-inline"></label>
+  <br>
+  <label for="roomName" class="label label-default">방 이름</label>
+  <label th:text="*{room.name}" id="roomName" class="form-inline"></label>
+  <div id="chatroom" style="width: 400px; height: 600px; border: 10px solid; background-color: gray"></div>
+  <input type="text" id="message" style="height: 30px; width: 340px" placeholder="내용을 입력하세요" autofocus>
+  <button class="btn btn-primary" id="send" onclick="sendClick()">전송</button>
+</div>
+</body>
+</html>

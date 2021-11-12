@@ -2,6 +2,7 @@ package com.sparta.hanghaeboardproject2.service;
 
 import com.sparta.hanghaeboardproject2.dto.MemberSignupDto;
 import com.sparta.hanghaeboardproject2.exception.HanghaeBoardJoinException;
+import com.sparta.hanghaeboardproject2.exception.HanghaeBoardLoginException;
 import com.sparta.hanghaeboardproject2.model.Member;
 import com.sparta.hanghaeboardproject2.repository.MemberRepository;
 import javax.transaction.Transactional;
@@ -52,6 +53,13 @@ public class MemberService {
         Member member = memberRepository.findByEmail(email).orElseThrow(
             () -> new HanghaeBoardJoinException("인증번호가 만료 되었습니다. 다시 회원 가입 해주세요.")
         );
+
+        Optional<Member> authMember = memberRepository
+            .findAllByEmailAndAuthCheckTrue(email);
+
+        if (authMember.isPresent()) {
+            throw new HanghaeBoardJoinException("이메일 인증 후 로그인 부탁드립니다.");
+        }
 
         if (member.getAuthKey().equalsIgnoreCase(authKey)) {
             member.confirm();

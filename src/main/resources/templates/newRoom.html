@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"/>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <meta charset="UTF-8">
+  <title>로그인 페이지</title>
+
+  <script>
+
+  </script>
+</head>
+<body>
+<div class="wrapper">
+  <form class="form-signing" action="/room/new" th:object="${form}" method="post">
+    <h2 class="form-signing-heading">새로운 채팅방 생성</h2>
+    <label for="title" class="sr-only">채팅방 이름</label>
+    <input type="text" th:field="*{name}" id="title" class="form-control" placeholder="채팅방 이름을 입력해주세요" required autofocus>
+    <br>
+    <button class="btn btn-primary" type="submit">생성하기</button>
+    <button class="btn btn-danger" onclick="location.href='/chatting'">돌아가기</button>
+  </form>
+</div>
+</body>
+</html>
