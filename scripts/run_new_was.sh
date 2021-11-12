@@ -20,4 +20,5 @@ fi
 
 nohup java -jar -Dserver.port=${TARGET_PORT} /home/ubuntu/hanghae-board-project2/build/libs/hanghae-board-project2-0.0.1-SNAPSHOT.jar &
 echo "> Now new WAS runs at ${TARGET_PORT}."
+
 exit 0
