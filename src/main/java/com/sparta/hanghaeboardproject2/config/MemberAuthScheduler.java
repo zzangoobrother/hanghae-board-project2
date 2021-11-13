@@ -17,7 +17,7 @@ public class MemberAuthScheduler {
     this.memberRepository = memberRepository;
   }
 
-  @Scheduled(cron = "15 * * * * *")
+//  @Scheduled(cron = "15 * * * * *")
   public void authMemberEmailDelete() {
     System.out.println("member 삭제");
     List<Member> members = memberRepository.findAllByAuthCheckFalseOrderByCreatedAtDesc();
