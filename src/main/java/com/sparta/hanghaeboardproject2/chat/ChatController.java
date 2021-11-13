@@ -9,13 +9,13 @@ import org.springframework.stereotype.Controller;
 @RequiredArgsConstructor
 public class ChatController {
 
-  private final SimpMessageSendingOperations messageSendingOperations;
-
-  @MessageMapping("/chat/message")
-  public void message(ChatMessage message) {
-    if (MessageType.ENTER.equals(message.getType())) {
-      message.setMessage(message.getSender() + "님이 입장하셨습니다.");
-    }
-    messageSendingOperations.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
-  }
+//  private final SimpMessageSendingOperations messageSendingOperations;
+//
+//  @MessageMapping("/chat/message")
+//  public void message(ChatMessage message) {
+//    if (MessageType.ENTER.equals(message.getType())) {
+//      message.setMessage(message.getSender() + "님이 입장하셨습니다.");
+//    }
+//    messageSendingOperations.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+//  }
 }

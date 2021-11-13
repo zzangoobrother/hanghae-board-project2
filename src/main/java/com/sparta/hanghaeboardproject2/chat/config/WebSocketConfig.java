@@ -1,8 +1,6 @@
 package com.sparta.hanghaeboardproject2.chat.config;
 
-import org.springframework.context.annotation.Configuration;
-
-@Configuration
+//@Configuration
 //@EnableWebSocketMessageBroker
 public class WebSocketConfig // implements WebSocketMessageBrokerConfigurer
 {
