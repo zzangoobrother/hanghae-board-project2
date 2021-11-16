@@ -4,13 +4,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:email.properties")
+@PropertySources({
+    @PropertySource(value = "classpath:email.properties", ignoreResourceNotFound = true),
+    @PropertySource(value = "file:${user.home}/env/email.properties", ignoreResourceNotFound = true)
+})
 public class MaliConfig {
 
     @Value("${mail.smtp.port}")

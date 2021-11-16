@@ -1,4 +1,4 @@
-package com.sparta.hanghaeboardproject2.chat.config;
+package com.sparta.hanghaeboardproject2.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -25,10 +25,9 @@ public class RedisConfig {
   }
 
   @Bean
-  public RedisTemplate<?, ?> redisTemplate() {
+  public RedisTemplate<String, Object> redisTemplate() {
     RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
     redisTemplate.setKeySerializer(new StringRedisSerializer());
-    redisTemplate.setValueSerializer(new StringRedisSerializer());
     redisTemplate.setConnectionFactory(redisConnectionFactory());
     return redisTemplate;
   }
