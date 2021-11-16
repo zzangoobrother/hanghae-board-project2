@@ -12,7 +12,7 @@ import java.util.Properties;
 
 @Configuration
 @PropertySources({
-    @PropertySource(value = "classpath:email.properties", ignoreResourceNotFound = true),
+    @PropertySource(value = "file:email.properties", ignoreResourceNotFound = true),
     @PropertySource(value = "file:${user.home}/env/email.properties", ignoreResourceNotFound = true)
 })
 public class MaliConfig {
